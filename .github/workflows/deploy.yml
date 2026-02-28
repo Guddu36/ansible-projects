@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-
       - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
@@ -24,4 +21,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no \
           -i ~/.ssh/id_rsa \
           ec2-user@98.86.146.34 \
-          "cd /root/ansible-projects && ansible-playbook -i inventory ansiblescript.yml"
+          "git config --global --add safe.directory /home/ec2-user/ansible-projects && \
+           cd /home/ec2-user/ansible-projects && \
+           ansible-playbook -i inventory ansiblescript.yml"
