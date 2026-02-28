@@ -32,5 +32,5 @@ jobs:
           ansible-playbook \
             -i "${{ secrets.SERVER_IP }}," \
             -u ${{ secrets.SSH_USER }} \
-            --private-key ~/.ssh/id_ed25519 \
+            --private-key ~/.ssh/id_rsa \
             ansiblescript.yml
