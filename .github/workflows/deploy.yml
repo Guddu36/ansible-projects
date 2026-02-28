@@ -1,4 +1,4 @@
-name: Deploy to Amazon Linux
+name: Deploy Ansible Playbook
 
 on:
   push:
@@ -10,27 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Repo
         uses: actions/checkout@v4
-
-      - name: Install Ansible
-        run: |
-          sudo apt update
-          sudo apt install -y ansible
 
       - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H $(grep -oP '^\S+' inventory) >> ~/.ssh/known_hosts
 
       - name: Run Ansible Playbook
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
         run: |
-          ansible-playbook \
-            -i "${{ secrets.SERVER_IP }}," \
-            -u ${{ secrets.SSH_USER }} \
+          ansible-playbook -i inventory \
             --private-key ~/.ssh/id_rsa \
+            -u ${{ secrets.SSH_USER }} \
             ansiblescript.yml
