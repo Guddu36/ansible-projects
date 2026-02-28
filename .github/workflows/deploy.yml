@@ -19,8 +19,9 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-      - name: Run Ansible Playbook
-        env:
-          ANSIBLE_HOST_KEY_CHECKING: "False"
-        run: |
-           ansible-playbook -i inventory ansiblescript.yml
+      - name: Run playbook on control server
+  run: |
+    ssh -o StrictHostKeyChecking=no \
+        -i ~/.ssh/id_rsa \
+        ec2-user@98.86.146.34 \
+        "cd /root/ansible-projects && ansible-playbook -i inventory ansiblescript.yml"
