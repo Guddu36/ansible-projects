@@ -10,17 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Setup SSH key
       - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
+      # Step 2: Run Ansible playbook on control server as root
       - name: Run playbook on control server
         run: |
           ssh -o StrictHostKeyChecking=no \
           -i ~/.ssh/id_rsa \
           ec2-user@98.86.146.34 \
-          "git config --global --add safe.directory /home/ec2-user/ansible-projects && \
-           cd /home/ec2-user/ansible-projects && \
-           ansible-playbook -i inventory ansiblescript.yml"
+          "sudo bash -c 'cd /root/ansible-projects && ansible-playbook -i inventory ansiblescript.yml'"
