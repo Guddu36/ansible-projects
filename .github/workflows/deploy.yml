@@ -20,8 +20,8 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
 
       - name: Run playbook on control server
-  run: |
-    ssh -o StrictHostKeyChecking=no \
-        -i ~/.ssh/id_rsa \
-        ec2-user@98.86.146.34 \
-        "cd /root/ansible-projects && ansible-playbook -i inventory ansiblescript.yml"
+        run: |
+          ssh -o StrictHostKeyChecking=no \
+          -i ~/.ssh/id_rsa \
+          ec2-user@98.86.146.34 \
+          "cd /root/ansible-projects && ansible-playbook -i inventory ansiblescript.yml"
