@@ -1,0 +1,7 @@
+---
+- name: my ansibe Project
+  hosts: clients
+  become: true
+  roles:
+    - nginx
+    - print_hello
