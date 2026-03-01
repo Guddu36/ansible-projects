@@ -1,6 +1,6 @@
 ---
 - name: my ansibe Project
-  hosts: clients
+  hosts: clients_test
   become: true
   roles:
     - nginx
