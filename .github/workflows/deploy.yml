@@ -3,7 +3,7 @@ name: Deploy Ansible Playbook
 on:
   push:
     branches:
-      - main
+      - test
 
 jobs:
   deploy:
